@@ -14,6 +14,11 @@
 
           border: none;  
         }
+
+        h1 {
+
+            font-weight: 600 !important;
+        }
         
         .todo-item {
             display: flex;
@@ -44,8 +49,8 @@
     <div class="container todo-list">
         <h1 class="text-center form-control" contenteditable="true">Max</h1>
         <div class="input-group">
-            <input type="text" id="todo-input" class="form-control" placeholder="Add new task" maxlength="22">
-            <button id="add-btn" class="btn btn-primary">Add</button>
+            <input type="text" id="todo-input" class="form-control" placeholder="" maxlength="22">
+            <button id="add-btn" class="btn btn-primary btn-sm">Add</button>
         </div>
         <ul id="todo-list" class="list-unstyled mt-3"></ul>
         <button id="reset-btn" class="btn btn-danger mt-3">Reset</button>
