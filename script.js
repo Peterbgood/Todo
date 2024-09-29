@@ -44,8 +44,8 @@ function renderList() {
                 ${list.items.map((item, itemIndex) => `
                    <li class="list-group-item d-flex align-items-center">
     ${item}
-    <button class="btn btn-danger btn-sm ms-auto float-end " onclick="deleteItem(${selectedListIndex}, ${itemIndex})">Delete</button>
-    <button class="btn btn-primary btn-sm ms-auto float-end " onclick="moveUp(${selectedListIndex}, ${itemIndex})">Up</button>
+    <button class="btn btn-danger btn-sm ms-auto" onclick="deleteItem(${selectedListIndex}, ${itemIndex})">Delete</button>
+    <button class="btn btn-primary btn-sm ms-auto me-2" onclick="moveUp(${selectedListIndex}, ${itemIndex})">Up</button>
 </li>
                 `).join('')}
             </ul>
