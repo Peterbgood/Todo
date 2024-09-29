@@ -11,11 +11,14 @@
         <h1 class="text-center">To-Do List</h1>
         <div class="row">
             <div class="col-12">
-                <input type="text" id="new-list-input" class="form-control" placeholder="Enter new list title">
+                <select id="list-selector" class="form-select">
+                    <option value="">Select a list</option>
+                </select>
+                <input type="text" id="new-list-input" class="form-control mt-3" placeholder="Enter new list title">
                 <button id="add-list-btn" class="btn btn-primary">Add New List</button>
             </div>
         </div>
-        <div id="lists-container"></div>
+        <div id="list-container"></div>
     </div>
 
     <script src="script.js"></script>
