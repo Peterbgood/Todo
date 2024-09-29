@@ -53,117 +53,143 @@
             <button id="add-btn" class="btn btn-primary btn-sm">Add</button>
         </div>
         <ul id="todo-list" class="list-unstyled mt-3"></ul>
-        <button id="reset-btn" class="btn btn-danger mt-3">Reset</button>
+        <div class="btn-group">
+            <button id="reset-btn" class="btn btn-danger mt-3">Reset</button>
+            <button id="new-list-btn" class="btn btn-success mt-3">New List</button>
+        </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     <script>
-        $(document).ready(function() {
-            loadTasks();
-            loadHeading();
 
-            // Add task on enter key press
-            $('#todo-input').keypress(function(e) {
-                if (e.which === 13) {
-                    addTask();
-                }
-            });
+$(document).ready(function() {
+    let currentListId = Date.now();
 
-            // Add task on
-            // Add task on button click
-            $('#add-btn').click(addTask);
+    loadTasks();
+    loadHeading();
 
-            // Delete task
-            $(document).on('click', '.delete-btn', deleteTask);
+    // Add task on enter key press
+    $('#todo-input').keypress(function(e) {
+        if (e.which === 13) {
+            addTask();
+        }
+    });
 
-            // Move task up
-            $(document).on('click', '.up-btn', moveTaskUp);
+    // Add task on button click
+    $('#add-btn').click(addTask);
 
-            // Reset all tasks
-            $('#reset-btn').click(resetTasks);
+    // Delete task
+    $(document).on('click', '.delete-btn', deleteTask);
 
-            // Save h1 content to local storage
-            function saveHeading() {
-                var heading = $('h1').text().trim();
-                localStorage.setItem('heading', heading);
+    // Move task up
+    $(document).on('click', '.up-btn', moveTaskUp);
+
+    // Reset all tasks
+    $('#reset-btn').click(resetTasks);
+
+    // Create new list
+    $('#new-list-btn').click(function() {
+        var newListName = prompt("Enter new list name:");
+        if (newListName !== null && newListName.trim() !== '') {
+            createNewList(newListName);
+        }
+    });
+
+    // Save h1 content to local storage
+    function saveHeading() {
+        var heading = $('h1').text().trim();
+        localStorage.setItem('heading', heading);
+    }
+
+    // Load h1 content from local storage
+    function loadHeading() {
+        var storedHeading = localStorage.getItem('heading');
+        if (storedHeading) {
+            $('h1').text(storedHeading);
+        }
+    }
+
+    function createNewList(listName) {
+        currentListId = Date.now();
+        saveTasks();
+        $('#todo-list').empty();
+        $('h1').text(listName);
+        saveHeading();
+        localStorage.setItem(`list_${currentListId}`, JSON.stringify([]));
+    }
+
+    function addTask() {
+        var task = $('#todo-input').val();
+        if (task !== '') {
+            var taskHtml = '<li class="todo-item">' + 
+                '<span>' + task.trim() + '</span>' + 
+                '<div class="">' + 
+                    '<button class="up-btn btn btn-sm btn-primary mx-1">Up</button>' + 
+                    '<button class="delete-btn btn btn-sm btn-danger">Delete</button>' + 
+                '</div>' + 
+            '</li>';
+            $('#todo-list').append(taskHtml);
+            $('#todo-input').val('');
+            saveTasks();
+        }
+    }
+
+    function deleteTask() {
+        $(this).parent().parent().remove();
+        saveTasks();
+    }
+
+    function moveTaskUp() {
+        var task = $(this).parent().parent();
+        task.prev().before(task.get());
+        saveTasks();
+    }
+
+    function resetTasks() {
+        $('#todo-list').empty();
+        localStorage.removeItem(`list_${currentListId}`);
+        $('h1').text('Max'); 
+        localStorage.removeItem('heading'); 
+    }
+
+    function saveTasks() {
+        var tasks = [];
+        $('#todo-list li span').each(function() {
+            var taskText = $(this).text().trim();
+            if (taskText !== '') {
+                tasks.push(taskText);
             }
-
-            // Load h1 content from local storage
-            function loadHeading() {
-                var storedHeading = localStorage.getItem('heading');
-                if (storedHeading) {
-                    $('h1').text(storedHeading);
-                }
-            }
-
-            function addTask() {
-                var task = $('#todo-input').val();
-                if (task !== '') {
-                    var taskHtml = '<li class="todo-item">' + 
-                        '<span>' + task.trim() + '</span>' + 
-                        '<div class="">' + 
-                            '<button class="up-btn btn btn-sm btn-primary mx-1">Up</button>' + 
-                            '<button class="delete-btn btn btn-sm btn-danger">Delete</button>' + 
-                        '</div>' + 
-                    '</li>';
-                    $('#todo-list').append(taskHtml);
-                    $('#todo-input').val('');
-                    saveTasks();
-                }
-            }
-
-            function deleteTask() {
-                $(this).parent().parent().remove();
-                saveTasks();
-            }
-
-            function moveTaskUp() {
-                var task = $(this).parent().parent();
-                task.prev().before(task.get());
-                saveTasks();
-            }
-
-            function resetTasks() {
-    $('#todo-list').empty();
-    localStorage.removeItem('tasks');
-    $('h1').text('Max'); // Reset h1 content
-    localStorage.removeItem('heading'); // Remove saved heading
-}
-
-            function saveTasks() {
-                var tasks = [];
-                $('#todo-list li span').each(function() {
-                    var taskText = $(this).text().trim();
-                    if (taskText !== '') {
-                        tasks.push(taskText);
-                    }
-                });
-                localStorage.setItem('tasks', JSON.stringify(tasks));
-                saveHeading(); // Call saveHeading here
-            }
-
-            function loadTasks() {
-                $('#todo-list').empty();
-                var storedTasks = JSON.parse(localStorage.getItem('tasks'));
-                if (storedTasks) {
-                    $.each(storedTasks, function(index, task) {
-                        var taskHtml = '<li class="todo-item">' + 
-                            '<span>' + task.trim() + '</span>' + 
-                            '<div class="">' + 
-                                '<button class="up-btn btn btn-sm btn-primary mx-1">Up</button>' + 
-                                '<button class="delete-btn btn btn-sm btn-danger">Delete</button>' + 
-                            '</div>' + 
-                        '</li>';
-                        $('#todo-list').append(taskHtml);
-                    });
-                }
-            }
-
-            // Call saveHeading whenever the h1 content changes
-            $('h1').on('input', saveHeading);
         });
+        localStorage.setItem(`list_${currentListId}`, JSON.stringify(tasks));
+        saveHeading(); 
+    }
+
+    function loadTasks() {
+        $('#todo-list').empty();
+        var storedTasks = JSON.parse(localStorage.getItem(`list_${currentListId}`));
+        if (storedTasks) {
+            $.each(storedTasks, function(index, task) {
+                var taskHtml = '<li class="todo-item">' + 
+                    '<span>' + task.trim() + '</span>' + 
+                    '<div class="">' + 
+                        '<button class="up-btn btn btn-sm btn-primary mx-1">Up</button>' + 
+                        '<button class="delete-btn btn btn-sm btn-danger">Delete</button>' + 
+                    '</div>' + 
+                '</li>';
+                $('#todo-list').append(taskHtml);
+            });
+        }
+    }
+
+    // Call saveHeading whenever the h1 content changes
+    $('h1').on('input', saveHeading);
+});
+        
+
+        
+
     </script>
 </body>
 </html>
