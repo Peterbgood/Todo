@@ -38,7 +38,7 @@ function renderList() {
         const listHtml = `
             <div class="mt-3 input-group">
                 <input type="text" id="new-item-input" class="form-control" placeholder="Enter new item">
-                <button class="btn btn-primary" onclick="addItem(${selectedListIndex})">Add Item</button>
+                <button class="btn btn-primary btn-sm" onclick="addItem(${selectedListIndex})">Add</button>
             </div>
             <ul id="list" class="list-group mt-2">
                 ${list.items.map((item, itemIndex) => `
