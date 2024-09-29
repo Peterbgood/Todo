@@ -201,56 +201,46 @@
     }
 
     // Load existing lists from local storage
-    function loadExistingLists() {
-        var existingLists = [];
-        for (var key in localStorage) {
-            if (key.startsWith('list_') && !key.includes('_name')) {
-                existingLists.push(key.replace('list_', ''));
+            function populateListSelector() {
+            var existingLists = loadExistingLists();
+            $('#list-selector').empty();
+            $('#list-selector').append('<option value="">Select a list</option>');
+            $.each(existingLists, function(index, listId) {
+                var listName = localStorage.getItem(`list_${listId}_name`);
+                if (listName !== null) {
+                    $('#list-selector').append(`
+                        <option value="${listId}">
+                            ${listName} 
+                            <button class="delete-list-btn" data-list-id="${listId}">Delete</button>
+                        </option>
+                    `);
+                } else {
+                    $('#list-selector').append(`
+                        <option value="${listId}">
+                            Untitled List 
+                            <button class="delete-list-btn" data-list-id="${listId}">Delete</button>
+                        </option>
+                    `);
+                }
+            });
+        }
+
+        // Save list name with list ID
+        function saveListName(listId, listName) {
+            localStorage.setItem(`list_${listId}_name`, listName);
+        }
+
+        // Delete list
+        function deleteList() {
+            var listId = $(this).data('list-id');
+            localStorage.removeItem(`list_${listId}`);
+            localStorage.removeItem(`list_${listId}_name`);
+            populateListSelector();
+            if (listId === currentListId) {
+                resetTasks();
             }
         }
-        return existingLists;
-    }
-
-    // Populate list selector with existing lists
-    function populateListSelector() {
-        var existingLists = loadExistingLists();
-        $('#list-selector').empty();
-               ($('#list-selector').append('<option value="">Select a list</option>');
-        $.each(existingLists, function(index, listId) {
-            var listName = localStorage.getItem(`list_${listId}_name`);
-            if (listName !== null) {
-                $('#list-selector').append(`
-                    <option value="${listId}">
-                        ${listName} 
-                        <button class="delete-list-btn" data-list-id="${listId}">Delete</button>
-                    </option>
-                `);
-            } else {
-                $('#list-selector').append(`
-                    <option value="${listId}">
-                        Untitled List 
-                        <button class="delete-list-btn" data-list-id="${listId}">Delete</button>
-                    </option>
-                `);
-            }
-        }));
-    }
-
-    // Save list name with list ID
-    function saveListName(listId, listName) {
-        localStorage.setItem(`list_${listId}_name`, listName);
-    }
-
-    // Delete list
-    function deleteList() {
-        var listId = $(this).data('list-id');
-        localStorage.removeItem(`list_${listId}`);
-        localStorage.removeItem(`list_${listId}_name`);
-        populateListSelector();
-        if (listId === currentListId) {
-            resetTasks();
-        }
-    }
+    });
 });
 
-</script> </body></html>
+    </script></body></html>
