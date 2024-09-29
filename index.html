@@ -97,6 +97,7 @@
         var newListName = prompt("Enter new list name:");
         if (newListName !== null && newListName.trim() !== '') {
             createNewList(newListName);
+            saveHeading(); // Save new list name as heading
         }
     });
 
@@ -120,6 +121,8 @@
         var storedHeading = localStorage.getItem('heading');
         if (storedHeading) {
             $('h1').text(storedHeading);
+        } else {
+            $('h1').text('Max'); // Default heading
         }
     }
 
@@ -127,7 +130,7 @@
         currentListId = Date.now();
         saveTasks();
         $('#todo-list').empty();
-        $('h1').text(listName);
+        $('h1').text(listName); // Update heading with new list name
         saveHeading();
         localStorage.setItem(`list_${currentListId}`, JSON.stringify([]));
         saveListName(currentListId, listName);
@@ -205,35 +208,36 @@
         return existingLists;
     }
 
- // Populate list selector with existing lists
-function populateListSelector() {
-    var existingLists = loadExistingLists();
-    $('#list-selector').empty();
-    $('#list-selector').append('<option value="">Select a list</option>');
-    $.each(existingLists, function(index, listId) {
-        var listName = localStorage.getItem(`list_${listId}_name`);
-        if (listName !== null) {
-            $('#list-selector').append(`<option value="${listId}">${listName}</option>`);
-        } else {
-            $('#list-selector').append(`<option value="${listId}">Untitled List</option>`);
-        }
-    });
-}
-
-// Load existing lists from local storage
-function loadExistingLists() {
-    var existingLists = [];
-    for (var key in localStorage) {
-        if (key.startsWith('list_') && !key.includes('_name')) {
-            existingLists.push(key.replace('list_', ''));
-        }
+        // Populate list selector with existing lists
+    function populateListSelector() {
+        var existingLists = loadExistingLists();
+        $('#list-selector').empty();
+        $('#list-selector').append('<option value="">Select a list</option>');
+        $.each(existingLists, function(index, listId) {
+            var listName = localStorage.getItem(`list_${listId}_name`);
+            if (listName !== null) {
+                $('#list-selector').append(`<option value="${listId}">${listName}</option>`);
+            } else {
+                $('#list-selector').append(`<option value="${listId}">Untitled List</option>`);
+            }
+        });
     }
-    return existingLists;
-}
 
-// Save list name with list ID
-function saveListName(listId, listName) {
-    localStorage.setItem(`list_${listId}_name`, listName);
-}
+    // Load existing lists from local storage
+    function loadExistingLists() {
+        var existingLists = [];
+        for (var key in localStorage) {
+            if (key.startsWith('list_') && !key.includes('_name')) {
+                existingLists.push(key.replace('list_', ''));
+            }
+        }
+        return existingLists;
+    }
+
+    // Save list name with list ID
+    function saveListName(listId, listName) {
+        localStorage.setItem(`list_${listId}_name`, listName);
+    }
+});
 
 </script> </body></html>
