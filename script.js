@@ -1,8 +1,8 @@
 // Initialize lists container
-// Initialize list selector, new list input, and add list button
 const listSelector = document.getElementById('list-selector');
 const newListInput = document.getElementById('new-list-input');
 const addListBtn = document.getElementById('add-list-btn');
+const saveListBtn = document.getElementById('save-list-btn');
 const listContainer = document.getElementById('list-container');
 
 // Load lists from local storage
@@ -28,10 +28,6 @@ function renderList() {
         const list = lists[selectedListIndex];
         const listHtml = `
             <div class="card mt-3">
-                <div class="card-header">
-                    <h5>${list.title}</h5>
-                    <button class="btn btn-danger float-end" onclick="deleteList(${selectedListIndex})">Delete List</button>
-                </div>
                 <div class="card-body">
                     <ul id="list" class="list-group">
                         ${list.items.map((item, itemIndex) => `
@@ -46,6 +42,7 @@ function renderList() {
                 <div class="card-footer">
                     <input type="text" id="new-item-input" class="form-control" placeholder="Enter new item">
                     <button class="btn btn-primary" onclick="addItem(${selectedListIndex})">Add Item</button>
+                    <button class="btn btn-danger mt-2" onclick="deleteList(${selectedListIndex})">Delete List</button>
                 </div>
             </div>
         `;
@@ -54,13 +51,17 @@ function renderList() {
 }
 
 // Function to add new list
-addListBtn.addEventListener('click', () => {
+saveListBtn.addEventListener('click', () => {
     const newListTitle = newListInput.value.trim();
     if (newListTitle) {
         lists.push({ title: newListTitle, items: [] });
         localStorage.setItem('lists', JSON.stringify(lists));
         newListInput.value = '';
         renderListSelector();
+        // Hide the modal
+        const modal = document.getElementById('addListModal');
+        const modalInstance = bootstrap.Modal.getInstance(modal);
+        modalInstance.hide();
     }
 });
 
