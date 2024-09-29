@@ -42,11 +42,11 @@ function renderList() {
             </div>
             <ul id="list" class="list-group mt-2">
                 ${list.items.map((item, itemIndex) => `
-                    <li class="list-group-item">
-                        ${item}
-                        <button class="btn btn-danger btn-sm float-end" onclick="deleteItem(${selectedListIndex}, ${itemIndex})">Delete</button>
-                        <button class="btn btn-primary btn-sm float-end me-2" onclick="moveUp(${selectedListIndex}, ${itemIndex})">Up</button>
-                    </li>
+                   <li class="list-group-item d-flex align-items-center">
+    ${item}
+    <button class="btn btn-danger btn-sm ms-auto" onclick="deleteItem(${selectedListIndex}, ${itemIndex})">Delete</button>
+    <button class="btn btn-primary btn-sm ms-auto me-2" onclick="moveUp(${selectedListIndex}, ${itemIndex})">Up</button>
+</li>
                 `).join('')}
             </ul>
             <button class="btn btn-danger w-100 mt-2" onclick="deleteList(${selectedListIndex})">Delete List</button>
