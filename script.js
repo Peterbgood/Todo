@@ -45,7 +45,7 @@ function renderList() {
              <li class="list-group-item d-flex align-items-center">
     ${item}
     <div class="ms-auto">
-        <button class="btn btn-primary btn-sm me-2" onclick="moveUp(${selectedListIndex}, ${itemIndex})">Up</button>
+        <button class="btn btn-primary btn-sm me-1" onclick="moveUp(${selectedListIndex}, ${itemIndex})">Up</button>
         <button class="btn btn-danger btn-sm" onclick="deleteItem(${selectedListIndex}, ${itemIndex})">Delete</button>
     </div>
 </li>
