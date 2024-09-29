@@ -42,7 +42,7 @@ function renderList() {
                 </div>
                 <div class="card-footer">
                     <input type="text" id="new-item-input" class="form-control" placeholder="Enter new item">
-                    <button class="btn btn-primary" onclick="addItem(${selectedListIndex})">Add Item</button>
+                    <button class="btn btn-primary mt-2" onclick="addItem(${selectedListIndex})">Add Item</button>
                     <button class="btn btn-danger mt-2" onclick="deleteList(${selectedListIndex})">Delete List</button>
                 </div>
             </div>
