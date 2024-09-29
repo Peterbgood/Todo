@@ -1,6 +1,7 @@
 // Initialize lists container
 // Initialize lists container
 // Initialize lists container
+// Initialize lists container
 const listSelector = document.getElementById('list-selector');
 const newListInput = document.getElementById('new-list-input');
 const addListBtn = document.getElementById('add-list-btn');
@@ -34,25 +35,19 @@ function renderList() {
         listContainer.innerHTML = '';
         const list = lists[selectedListIndex];
         const listHtml = `
-            <div class="card mt-3">
-                <div class="card-header">
-                    <input type="text" id="new-item-input" class="form-control" placeholder="Enter new item">
-                    <button class="btn btn-primary" onclick="addItem(${selectedListIndex})">Add Item</button>
-                </div>
-                <div class="card-body">
-                    <ul id="list" class="list-group">
-                        ${list.items.map((item, itemIndex) => `
-                            <li class="list-group-item">
-                                ${item}
-                                <button class="btn btn-danger float-end" onclick="deleteItem(${selectedListIndex}, ${itemIndex})">Delete</button>
-                                <button class="btn btn-primary float-end me-2" onclick="moveUp(${selectedListIndex}, ${itemIndex})">Up</button>
-                            </li>
-                        `).join('')}
-                    </ul>
-                </div>
-                <div class="card-footer">
-                    <button class="btn btn-danger w-100" onclick="deleteList(${selectedListIndex})">Delete List</button>
-                </div>
+            <div class="mt-3">
+                <input type="text" id="new-item-input" class="form-control" placeholder="Enter new item">
+                <button class="btn btn-primary" onclick="addItem(${selectedListIndex})">Add Item</button>
+                <ul id="list" class="list-group mt-2">
+                    ${list.items.map((item, itemIndex) => `
+                        <li class="list-group-item">
+                            ${item}
+                            <button class="btn btn-danger btn-sm float-end" onclick="deleteItem(${selectedListIndex}, ${itemIndex})">Delete</button>
+                            <button class="btn btn-primary btn-sm float-end me-2" onclick="moveUp(${selectedListIndex}, ${itemIndex})">Up</button>
+                        </li>
+                    `).join('')}
+                </ul>
+                <button class="btn btn-danger w-100 mt-2" onclick="deleteList(${selectedListIndex})">Delete List</button>
             </div>
         `;
         listContainer.insertAdjacentHTML('beforeend', listHtml);
