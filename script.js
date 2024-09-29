@@ -27,7 +27,9 @@ function renderList() {
         listContainer.innerHTML = '';
         const list = lists[selectedListIndex];
         const listHtml = `
-            <div class="card mt-3">
+            <div class="card mt-3"
+            >
+
                 <div class="card-body">
                     <ul id="list" class="list-group">
                         ${list.items.map((item, itemIndex) => `
@@ -39,11 +41,7 @@ function renderList() {
                         `).join('')}
                     </ul>
                 </div>
-                <div class="card-footer">
-                    <input type="text" id="new-item-input" class="form-control" placeholder="Enter new item">
-                    <button class="btn btn-primary" onclick="addItem(${selectedListIndex})">Add Item</button>
-                    <button class="btn btn-danger mt-2" onclick="deleteList(${selectedListIndex})">Delete List</button>
-                </div>
+              
             </div>
         `;
         listContainer.insertAdjacentHTML('beforeend', listHtml);
