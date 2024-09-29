@@ -1,5 +1,6 @@
 // Initialize lists container
 // Initialize lists container
+// Initialize lists container
 const listSelector = document.getElementById('list-selector');
 const newListInput = document.getElementById('new-list-input');
 const addListBtn = document.getElementById('add-list-btn');
@@ -19,6 +20,11 @@ function renderListSelector() {
         listSelector.appendChild(option);
     });
     listContainer.innerHTML = '';
+    // Select the first list by default
+    if (lists.length > 0) {
+        listSelector.value = 0;
+        renderList();
+    }
 }
 
 // Function to render list
@@ -29,6 +35,10 @@ function renderList() {
         const list = lists[selectedListIndex];
         const listHtml = `
             <div class="card mt-3">
+                <div class="card-header">
+                    <input type="text" id="new-item-input" class="form-control" placeholder="Enter new item">
+                    <button class="btn btn-primary" onclick="addItem(${selectedListIndex})">Add Item</button>
+                </div>
                 <div class="card-body">
                     <ul id="list" class="list-group">
                         ${list.items.map((item, itemIndex) => `
@@ -41,9 +51,7 @@ function renderList() {
                     </ul>
                 </div>
                 <div class="card-footer">
-                    <input type="text" id="new-item-input" class="form-control" placeholder="Enter new item">
-                    <button class="btn btn-primary mt-2" onclick="addItem(${selectedListIndex})">Add Item</button>
-                    <button class="btn btn-danger mt-2" onclick="deleteList(${selectedListIndex})">Delete List</button>
+                    <button class="btn btn-danger w-100" onclick="deleteList(${selectedListIndex})">Delete List</button>
                 </div>
             </div>
         `;
