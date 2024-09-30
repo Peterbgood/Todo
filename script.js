@@ -42,7 +42,7 @@ function renderList() {
         listContainer.innerHTML = '';
         const list = lists[selectedListIndex];
         const listHtml = `
-            <div class="mt-1 input-group">
+            <div class="mt-1 mb-3 input-group">
                 <input type="text" id="new-item-input" class="form-control mb-3" maxlength="30" placeholder="Enter new item">
                 <button class="btn btn-primary btn-sm" onclick="addItem(${selectedListIndex})">Add</button>
             </div>
