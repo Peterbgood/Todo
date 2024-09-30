@@ -3,6 +3,7 @@
 // Initialize lists container
 // Initialize lists container
 // Initialize lists container
+// Initialize elements
 const listSelector = document.getElementById('list-selector');
 const newListInput = document.getElementById('new-list-input');
 const addListBtn = document.getElementById('add-list-btn');
@@ -22,8 +23,13 @@ function renderListSelector() {
         listSelector.appendChild(option);
     });
     listContainer.innerHTML = '';
-    // Select the first list by default
-    if (lists.length > 0) {
+    
+    // Select the last updated list by default
+    const lastSelectedIndex = localStorage.getItem('lastSelectedIndex');
+    if (lastSelectedIndex !== null && lists.length > 0) {
+        listSelector.value = lastSelectedIndex;
+        renderList();
+    } else if (lists.length > 0) {
         listSelector.value = 0;
         renderList();
     }
@@ -72,6 +78,11 @@ saveListBtn.addEventListener('click', () => {
         localStorage.setItem('lists', JSON.stringify(lists));
         newListInput.value = '';
         renderListSelector();
+        // Select the newly added list
+        listSelector.value = lists.length - 1;
+        renderList();
+        // Store the index of the selected list in local storage
+        localStorage.setItem('lastSelectedIndex', listSelector.value);
         // Hide the modal
         const modal = document.getElementById('addListModal');
         const modalInstance = bootstrap.Modal.getInstance(modal);
@@ -79,7 +90,11 @@ saveListBtn.addEventListener('click', () => {
     }
 });
 
-listSelector.addEventListener('change', renderList);
+listSelector.addEventListener('change', () => {
+    renderList();
+    // Store the index of the selected list in local storage
+    localStorage.setItem('lastSelectedIndex', listSelector.value);
+});
 
 // Function to delete list
 function deleteList(index) {
@@ -112,7 +127,7 @@ function moveUp(listIndex, itemIndex) {
     if (itemIndex > 0) {
         const item = lists[listIndex].items.splice(itemIndex, 1)[0];
         lists[listIndex].items.splice(itemIndex - 1, 0, item);
-        localStorage.setItem('lists', JSON.stringify(lists));
+                localStorage.setItem('lists', JSON.stringify(lists));
         renderList();
     }
 }
