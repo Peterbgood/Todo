@@ -8,14 +8,26 @@
     text-align: center;
     border-radius: 5px;
     border: none;
-    background-color: #007bff;
+    background-color: #6495ED !important;
     color: white;
+}
+
+.btn-primary {
+
+    background-color: #6495ED;
+}
+
+.btn-danger {
+
+    background-color: #C9E4CA;
+    color: #000;
+    border-color: #fff;
 }
 
 .container {
     position: relative;
 }
- #list {
+        #list {
     margin-top: 30px !important; /* or any other value */
 }
 
@@ -50,6 +62,8 @@ text-align: center !important;
             margin-top: 10px;
             padding: 5px;
             border-radius: 10px;
+            background-color: #F5F5DC;
             
         }
+
         
