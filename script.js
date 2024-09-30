@@ -43,17 +43,17 @@ function renderList() {
                 <input type="text" id="new-item-input" class="form-control" maxlength="30" placeholder="Enter new item">
                 <button class="btn btn-primary btn-sm" onclick="addItem(${selectedListIndex})">Add</button>
             </div>
-            <ul id="list" class="list-group mt-2">
+            <div id="list" class="mt-2">
                 ${list.items.map((item, itemIndex) => `
-             <li class="list-group-item d-flex align-items-center">
-    ${item}
-    <div class="ms-auto">
-        <button class="btn btn-primary btn-sm me-1" onclick="moveUp(${selectedListIndex}, ${itemIndex})">Up</button>
-        <button class="btn btn-danger btn-sm" onclick="deleteItem(${selectedListIndex}, ${itemIndex})">Delete</button>
-    </div>
-</li>
+                    <div class="d-flex align-items-center border-bottom pb-2 mb-2">
+                        ${item}
+                        <div class="ms-auto">
+                            <button class="btn btn-primary btn-sm me-1" onclick="moveUp(${selectedListIndex}, ${itemIndex})">Up</button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteItem(${selectedListIndex}, ${itemIndex})">Delete</button>
+                        </div>
+                    </div>
                 `).join('')}
-            </ul>
+            </div>
             <button class="btn btn-danger w-100 mt-2" onclick="deleteList(${selectedListIndex})">Delete List</button>
         `;
         listContainer.insertAdjacentHTML('beforeend', listHtml);
@@ -66,7 +66,7 @@ function renderList() {
         });
     } else if (selectedListIndex === 'new') {
         const newListHtml = `
-            <div class="mt-1  input-group">
+            <div class="mt-1 input-group">
                 <input type="text" id="new-list-input" class="form-control" maxlength="30" placeholder="Enter new list title">
                 <button class="btn btn-primary btn-sm" id="save-new-list-btn">Save</button>
             </div>
