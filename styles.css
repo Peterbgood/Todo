@@ -1,0 +1,55 @@
+ body {
+            background-color: #fff;
+        }
+#add-list-btn {
+    width: 100%;
+    margin-top: 20px;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+}
+
+.container {
+    position: relative;
+}
+        #list {
+    margin-top: 30px !important; /* or any other value */
+}
+
+        
+
+        #list-selector {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+        #list-selector {
+  text-align: center;
+  text-align-last: center;
+}
+
+#list-selector option {
+  text-align: center;
+}
+
+        #list-selector {
+text-align: center !important;
+            
+        }
+
+        .list-group-item {
+    display: flex;
+    align-items: center;
+}
+        .container {
+            max-width: 800px;
+            margin-top: 10px;
+            padding: 5px;
+            border-radius: 10px;
+            
+        }
+        
