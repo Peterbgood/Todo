@@ -121,8 +121,8 @@ function addItem(listIndex) {
     if (newItem) {
         lists[listIndex].items.push(newItem);
         localStorage.setItem('lists', JSON.stringify(lists));
-        newItemInput.value = '';
         renderList();
+        document.getElementById('new-item-input').focus(); // Get the element again after rendering
     }
 }
 
