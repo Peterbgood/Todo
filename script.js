@@ -42,7 +42,7 @@ function renderList() {
             </div>
             <ul id="list" class="list-group mt-2">
                 ${list.items.map((item, itemIndex) => `
-             <li class="list-group-item d-flex align-items-center">
+             <li class="list-group-item d-flex align-items-center fw-bold text-center">
     ${item}
     <div class="ms-auto">
         <button class="btn btn-primary btn-sm me-1" onclick="moveUp(${selectedListIndex}, ${itemIndex})">Up</button>
