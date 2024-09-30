@@ -2,20 +2,13 @@
 const listSelector = document.getElementById('list-selector');
 const newListInput = document.getElementById('new-list-input');
 const listContainer = document.getElementById('list-container');
-const addListBtn = document.getElementById('add-list-btn');
-const saveListBtn = document.getElementById('save-list-btn');
-
-// Hide the add list button and input by default
-addListBtn.style.display = 'none';
-newListInput.style.display = 'none';
-saveListBtn.style.display = 'none';
 
 // Load lists from local storage
 let lists = JSON.parse(localStorage.getItem('lists')) || [];
 
 // Function to render list selector options
 function renderListSelector() {
-    listSelector.innerHTML = '<option value="">Select a list</option>';
+    listSelector.innerHTML = '';
     lists.forEach((list, index) => {
         const option = document.createElement('option');
         option.value = index;
@@ -84,9 +77,14 @@ function renderList() {
         // Add event listener for save button
         const saveNewListBtn = document.getElementById('save-new-list-btn');
         saveNewListBtn.addEventListener('click', saveList);
-    } else {
-        // Hide all buttons and inputs when no list is selected
-        listContainer.innerHTML = '';
+        
+        // Add event listener for enter key press
+        const newListInput = document.getElementById('new-list-input');
+        newListInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                saveList();
+            }
+        });
     }
 }
 
@@ -98,7 +96,6 @@ function saveList() {
         localStorage.setItem('lists', JSON.stringify(lists));
         document.getElementById('new-list-input').value = '';
         renderListSelector();
-        // Select the newly added list
         listSelector.value = lists.length - 1;
         renderList();
         // Store the index of the selected list in local storage
@@ -106,19 +103,15 @@ function saveList() {
     }
 }
 
-listSelector.addEventListener('change', () => {
-    renderList();
-    // Store the index of the selected list in local storage
-    if (listSelector.value !== 'new') {
-        localStorage.setItem('lastSelectedIndex', listSelector.value);
-    }
-});
-
 // Function to delete list
 function deleteList(index) {
     lists.splice(index, 1);
     localStorage.setItem('lists', JSON.stringify(lists));
     renderListSelector();
+    listSelector.value = 0;
+    renderList();
+    // Store the index of the selected list in local storage
+    localStorage.setItem('lastSelectedIndex', listSelector.value);
 }
 
 // Function to add item to list
@@ -149,5 +142,13 @@ function moveUp(listIndex, itemIndex) {
         renderList();
     }
 }
+
+listSelector.addEventListener('change', () => {
+    renderList();
+    // Store the index of the selected list in local storage
+    if (listSelector.value !== 'new') {
+        localStorage.setItem('lastSelectedIndex', listSelector.value);
+    }
+});
 
 renderListSelector();
