@@ -18,6 +18,12 @@
     color: #000;
 }
 
+.btn-primary:hover {
+
+    
+    color: #000;
+}
+
 .btn-danger {
 
     background-color: #C9E4CA;
@@ -45,6 +51,7 @@
   border: none;
   outline: none;
   box-shadow: none;
+            background-color: #F5F5DC ;
 }
 
         #list-selector {
