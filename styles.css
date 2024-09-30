@@ -1,5 +1,5 @@
  body {
-            background-color: #fff;
+            background-color: #F5F5DC;
         }
 #add-list-btn {
     width: 100%;
@@ -15,11 +15,19 @@
 .btn-primary {
 
     background-color: #6495ED;
+    color: #000;
 }
 
 .btn-danger {
 
     background-color: #C9E4CA;
+    color: #000;
+    border-color: #fff;
+}
+
+.btn-danger:hover {
+
+    background-color: #dbefdc !important;
     color: #000;
     border-color: #fff;
 }
