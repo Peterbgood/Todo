@@ -47,9 +47,9 @@
 
 <body>
     <div class="container todo-list">
-        <h1 class="text-center form-control" contenteditable="true">Max</h1>
+        <h1 class="text-center form-control" contenteditable="true">To-Do-List</h1>
         <div class="input-group">
-            <input type="text" id="todo-input" class="form-control" placeholder="" maxlength="30">
+            <input type="text" id="todo-input" class="form-control" placeholder="" >
             <button id="add-btn" class="btn btn-primary btn-sm">Add</button>
         </div>
         <ul id="todo-list" class="list-unstyled mt-3"></ul>
@@ -128,7 +128,7 @@
             function resetTasks() {
     $('#todo-list').empty();
     localStorage.removeItem('tasks');
-    $('h1').text('Max'); // Reset h1 content
+    $('h1').text('To-Do-List'); // Reset h1 content
     localStorage.removeItem('heading'); // Remove saved heading
 }
 
