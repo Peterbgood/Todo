@@ -40,6 +40,8 @@ function renderListSelector() {
     }
 }
 
+
+
 // Function to render list
 function renderList() {
     const selectedListIndex = listSelector.value;
@@ -58,6 +60,7 @@ function renderList() {
 </li>
                 `).join('')}
             </ul>
+            <button class="btn btn-danger w-100 mt-2" onclick="deleteList(${selectedListIndex})">Delete List</button>
         `;
         listContainer.insertAdjacentHTML('beforeend', listHtml);
         
@@ -65,7 +68,11 @@ function renderList() {
         const newItemInput = document.getElementById('new-item-input');
         newItemInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
+                e.preventDefault(); // Prevent default behavior
                 addItem(selectedListIndex);
+                setTimeout(() => {
+                    newItemInput.focus(); // Focus on the input field
+                }, 50); // Adjust the delay as needed
             }
         });
 
@@ -117,7 +124,11 @@ function renderList() {
         const newListInput = document.getElementById('new-list-input');
         newListInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
+                e.preventDefault(); // Prevent default behavior
                 saveList();
+                setTimeout(() => {
+                    newListInput.focus(); // Focus on the input field
+                }, 50); // Adjust the delay as needed
             }
         });
     } else {
@@ -125,6 +136,9 @@ function renderList() {
         listContainer.innerHTML = '';
     }
 }
+
+
+
 // Function to save new list
 function saveList() {
     const newListTitle = document.getElementById('new-list-input').value.trim();
