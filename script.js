@@ -49,43 +49,69 @@ function renderList() {
     if (selectedListIndex !== '' && selectedListIndex !== 'new') {
         listContainer.innerHTML = '';
         const list = lists[selectedListIndex];
-        const listHtml = `
-            <div class="mt-1  input-group">
-                <input type="text" id="new-item-input" class="form-control" maxlength="30" placeholder="Enter new item">
-                <button class="btn btn-primary btn-sm" onclick="addItem(${selectedListIndex})">Add</button>
-            </div>
-            <ul id="list" class="list-group mt-2">
-                ${list.items.map((item, itemIndex) => `
-             <li class="list-group-item d-flex align-items-center" data-index="${itemIndex}">
-    ${item}
-</li>
-                `).join('')}
-            </ul>
-            <button class="btn btn-danger w-100 mt-2" onclick="deleteList(${selectedListIndex})">Delete List</button>
-        `;
-        listContainer.insertAdjacentHTML('beforeend', listHtml);
-        
+
+        // Create input element separately
+        const newItemInput = document.createElement('input');
+        newItemInput.type = 'text';
+        newItemInput.id = 'new-item-input';
+        newItemInput.className = 'form-control';
+        newItemInput.maxLength = 30;
+        newItemInput.placeholder = 'Enter new item';
+
+        // Create add button element separately
+        const addButton = document.createElement('button');
+        addButton.className = 'btn btn-primary btn-sm';
+        addButton.onclick = () => addItem(selectedListIndex);
+        addButton.textContent = 'Add';
+
+        // Create input group container
+        const inputGroup = document.createElement('div');
+        inputGroup.className = 'mt-1 input-group';
+        inputGroup.appendChild(newItemInput);
+        inputGroup.appendChild(addButton);
+
+        // Create list element
+        const listElement = document.createElement('ul');
+        listElement.id = 'list';
+        listElement.className = 'list-group mt-2';
+        list.items.forEach((item, itemIndex) => {
+            const listItem = document.createElement('li');
+            listItem.className = 'list-group-item d-flex align-items-center';
+            listItem.dataset.index = itemIndex;
+            listItem.textContent = item;
+            listElement.appendChild(listItem);
+        });
+
+        // Create delete list button
+        const deleteButton = document.createElement('button');
+        deleteButton.className = 'btn btn-danger w-100 mt-2';
+        deleteButton.onclick = () => deleteList(selectedListIndex);
+        deleteButton.textContent = 'Delete List';
+
+        // Append elements to listContainer
+        listContainer.appendChild(inputGroup);
+        listContainer.appendChild(listElement);
+        listContainer.appendChild(deleteButton);
+
         // Add event listener for enter key press
-        const newItemInput = document.getElementById('new-item-input');
         newItemInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
-                e.preventDefault(); // Prevent default behavior
+                e.preventDefault(); 
                 addItem(selectedListIndex);
                 setTimeout(() => {
-                    newItemInput.focus(); // Focus on the input field
-                    newItemInput.setSelectionRange(0, 0); // Set cursor position
+                    newItemInput.focus(); 
+                    newItemInput.setSelectionRange(0, 0); 
                     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-                        // For mobile devices, manually open the keyboard
                         newItemInput.click();
-                        newItemInput.setSelectionRange(0, 0); // Set cursor position
+                        newItemInput.setSelectionRange(0, 0); 
                     }
-                }, 50); // Adjust the delay as needed
+                }, 50); 
             }
         });
 
         // Add event listeners for list items
-        const listItems = document.querySelectorAll('#list li');
-        listItems.forEach((item) => {
+        const listItems = listElement.children;
+        Array.from(listItems).forEach((item) => {
             // Double-click to move up
             let lastClick = 0;
             item.addEventListener('click', (e) => {
@@ -101,7 +127,7 @@ function renderList() {
             item.addEventListener('touchstart', () => {
                 timer = setTimeout(() => {
                     deleteItem(selectedListIndex, parseInt(item.dataset.index));
-                }, 500); // Adjust the delay as needed
+                }, 500); 
             });
             item.addEventListener('touchend', () => {
                 clearTimeout(timer);
@@ -113,7 +139,8 @@ function renderList() {
                 deleteItem(selectedListIndex, parseInt(item.dataset.index));
             });
         });
-    } else if (selectedListIndex === 'new') {
+    } 
+    else if (selectedListIndex === 'new') {
         const newListHtml = `
             <div class="mt-1  input-group">
                 <input type="text" id="new-list-input" class="form-control" maxlength="30" placeholder="Enter new list title">
@@ -131,19 +158,19 @@ function renderList() {
         const newListInput = document.getElementById('new-list-input');
         newListInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
-                e.preventDefault(); // Prevent default behavior
+                e.preventDefault(); 
                 saveList();
                 setTimeout(() => {
-                    newListInput.focus(); // Focus on the input field
-                }, 50); // Adjust the delay as needed
+                    newListInput.focus(); 
+                }, 50); 
             }
         });
-    } else {
+    } 
+    else {
         // Hide all buttons and inputs when no list is selected
         listContainer.innerHTML = '';
     }
 }
-
 
 
 // Function to save new list
