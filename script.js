@@ -85,6 +85,14 @@ function renderList() {
         // Add event listener for save button
         const saveNewListBtn = document.getElementById('save-new-list-btn');
         saveNewListBtn.addEventListener('click', saveList);
+
+        // Add event listener for Enter key press
+        const newListInput = document.getElementById('new-list-input');
+        newListInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                saveList();
+            }
+        });
     } else {
         // Hide all buttons and inputs when no list is selected
         listContainer.innerHTML = '';
