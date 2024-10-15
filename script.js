@@ -72,11 +72,11 @@ function renderList() {
                 e.preventDefault(); // Prevent default behavior
                 addItem(selectedListIndex);
                 setTimeout(() => {
-                    newItemInput.focus(); // Focus on the input field
-                    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-                        // For mobile devices, manually open the keyboard
-                        newItemInput.click();
-                    }
+                    newItemInput.blur(); // Blur input field
+                    setTimeout(() => {
+                        newItemInput.focus(); // Refocus input field
+                        newItemInput.setSelectionRange(0, 0); // Set cursor position
+                    }, 100);
                 }, 50); // Adjust the delay as needed
             }
         });
