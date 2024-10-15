@@ -53,24 +53,51 @@ function renderList() {
             </div>
             <ul id="list" class="list-group mt-2">
                 ${list.items.map((item, itemIndex) => `
-             <li class="list-group-item d-flex align-items-center">
+             <li class="list-group-item d-flex align-items-center" data-index="${itemIndex}">
     ${item}
-    <div class="ms-auto">
-        <button class="btn btn-primary btn-sm me-1" onclick="moveUp(${selectedListIndex}, ${itemIndex})">Up</button>
-        <button class="btn btn-danger btn-sm" onclick="deleteItem(${selectedListIndex}, ${itemIndex})">Delete</button>
-    </div>
 </li>
                 `).join('')}
             </ul>
-            <button class="btn btn-danger w-100 mt-2" onclick="deleteList(${selectedListIndex})">Delete</button>
         `;
         listContainer.insertAdjacentHTML('beforeend', listHtml);
+        
         // Add event listener for enter key press
         const newItemInput = document.getElementById('new-item-input');
         newItemInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 addItem(selectedListIndex);
             }
+        });
+
+        // Add event listeners for list items
+        const listItems = document.querySelectorAll('#list li');
+        listItems.forEach((item) => {
+            // Double-click to move up
+            let lastClick = 0;
+            item.addEventListener('click', (e) => {
+                const currentTime = new Date().getTime();
+                if (currentTime - lastClick < 500) {
+                    moveUp(selectedListIndex, parseInt(item.dataset.index));
+                }
+                lastClick = currentTime;
+            });
+
+            // Press-and-hold (long press) to delete on mobile
+            let timer;
+            item.addEventListener('touchstart', () => {
+                timer = setTimeout(() => {
+                    deleteItem(selectedListIndex, parseInt(item.dataset.index));
+                }, 500); // Adjust the delay as needed
+            });
+            item.addEventListener('touchend', () => {
+                clearTimeout(timer);
+            });
+
+            // For desktop delete
+            item.addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+                deleteItem(selectedListIndex, parseInt(item.dataset.index));
+            });
         });
     } else if (selectedListIndex === 'new') {
         const newListHtml = `
@@ -98,7 +125,6 @@ function renderList() {
         listContainer.innerHTML = '';
     }
 }
-
 // Function to save new list
 function saveList() {
     const newListTitle = document.getElementById('new-list-input').value.trim();
