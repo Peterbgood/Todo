@@ -86,7 +86,7 @@ function renderList() {
         const deleteButton = document.createElement('button');
         deleteButton.className = 'btn btn-danger w-100 mt-2';
         deleteButton.onclick = () => deleteList(selectedListIndex);
-        deleteButton.textContent = 'Delete List';
+        deleteButton.textContent = 'Delete';
 
         // Append elements to listContainer
         listContainer.appendChild(inputGroup);
