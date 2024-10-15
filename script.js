@@ -1,14 +1,22 @@
+
 // Initialize elements
 const listSelector = document.getElementById('list-selector');
 const newListInput = document.getElementById('new-list-input');
 const listContainer = document.getElementById('list-container');
+const addListBtn = document.getElementById('add-list-btn');
+const saveListBtn = document.getElementById('save-list-btn');
+
+// Hide the add list button and input by default
+addListBtn.style.display = 'none';
+newListInput.style.display = 'none';
+saveListBtn.style.display = 'none';
 
 // Load lists from local storage
 let lists = JSON.parse(localStorage.getItem('lists')) || [];
 
 // Function to render list selector options
 function renderListSelector() {
-    listSelector.innerHTML = '';
+    listSelector.innerHTML = '<option value="">Select a list</option>';
     lists.forEach((list, index) => {
         const option = document.createElement('option');
         option.value = index;
@@ -43,17 +51,17 @@ function renderList() {
                 <input type="text" id="new-item-input" class="form-control" maxlength="30" placeholder="Enter new item">
                 <button class="btn btn-primary btn-sm" onclick="addItem(${selectedListIndex})">Add</button>
             </div>
-            <div id="list" class="mt-2">
+            <ul id="list" class="list-group mt-2">
                 ${list.items.map((item, itemIndex) => `
-                    <div class="d-flex align-items-center border-bottom pb-2 mb-2">
-                        ${item}
-                        <div class="ms-auto">
-                            <button class="btn btn-primary btn-sm me-1" onclick="moveUp(${selectedListIndex}, ${itemIndex})">Up</button>
-                            <button class="btn btn-danger btn-sm" onclick="deleteItem(${selectedListIndex}, ${itemIndex})">Delete</button>
-                        </div>
-                    </div>
+             <li class="list-group-item d-flex align-items-center">
+    ${item}
+    <div class="ms-auto">
+        <button class="btn btn-primary btn-sm me-1" onclick="moveUp(${selectedListIndex}, ${itemIndex})">Up</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteItem(${selectedListIndex}, ${itemIndex})">Delete</button>
+    </div>
+</li>
                 `).join('')}
-            </div>
+            </ul>
             <button class="btn btn-danger w-100 mt-2" onclick="deleteList(${selectedListIndex})">Delete List</button>
         `;
         listContainer.insertAdjacentHTML('beforeend', listHtml);
@@ -66,7 +74,7 @@ function renderList() {
         });
     } else if (selectedListIndex === 'new') {
         const newListHtml = `
-            <div class="mt-1 input-group">
+            <div class="mt-1  input-group">
                 <input type="text" id="new-list-input" class="form-control" maxlength="30" placeholder="Enter new list title">
                 <button class="btn btn-primary btn-sm" id="save-new-list-btn">Save</button>
             </div>
@@ -77,14 +85,9 @@ function renderList() {
         // Add event listener for save button
         const saveNewListBtn = document.getElementById('save-new-list-btn');
         saveNewListBtn.addEventListener('click', saveList);
-        
-        // Add event listener for enter key press
-        const newListInput = document.getElementById('new-list-input');
-        newListInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                saveList();
-            }
-        });
+    } else {
+        // Hide all buttons and inputs when no list is selected
+        listContainer.innerHTML = '';
     }
 }
 
@@ -96,6 +99,7 @@ function saveList() {
         localStorage.setItem('lists', JSON.stringify(lists));
         document.getElementById('new-list-input').value = '';
         renderListSelector();
+        // Select the newly added list
         listSelector.value = lists.length - 1;
         renderList();
         // Store the index of the selected list in local storage
@@ -103,15 +107,19 @@ function saveList() {
     }
 }
 
+listSelector.addEventListener('change', () => {
+    renderList();
+    // Store the index of the selected list in local storage
+    if (listSelector.value !== 'new') {
+        localStorage.setItem('lastSelectedIndex', listSelector.value);
+    }
+});
+
 // Function to delete list
 function deleteList(index) {
     lists.splice(index, 1);
     localStorage.setItem('lists', JSON.stringify(lists));
     renderListSelector();
-    listSelector.value = 0;
-    renderList();
-    // Store the index of the selected list in local storage
-    localStorage.setItem('lastSelectedIndex', listSelector.value);
 }
 
 // Function to add item to list
@@ -142,13 +150,5 @@ function moveUp(listIndex, itemIndex) {
         renderList();
     }
 }
-
-listSelector.addEventListener('change', () => {
-    renderList();
-    // Store the index of the selected list in local storage
-    if (listSelector.value !== 'new') {
-        localStorage.setItem('lastSelectedIndex', listSelector.value);
-    }
-});
 
 renderListSelector();
