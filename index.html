@@ -9,7 +9,7 @@
       
 
 
-.body {
+      .body {
     background-color: #f5f5f5;
     font-family: Arial, sans-serif;
     transition: background-color 0.3s ease;
@@ -43,26 +43,26 @@
     margin: 40px auto;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+   
     background-color: #fff;
     transition: box-shadow 0.3s ease;
 }
 
 .container:hover {
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+   
 }
 
 .list-group-item {
     display: flex;
     align-items: center;
     padding: 15px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #ddd !important;
     transition: background-color 0.3s ease;
+   
+    color: #000;
 }
 
-.list-group-item:hover {
-    background-color: #f0f0f0;
-}
+
 
 .list-group-item {
     border: none;
@@ -136,17 +136,36 @@
     box-shadow: 0 0 5px rgba(0, 128, 0, 0.3);
 }
 
-.list-group-item .btn-primary {
-    margin-right: 5px;
+.btn-primary {
+    background-color: #999;
+    border: none;
+    color: #fff;
 }
 
-.list-group-item .btn-danger {
-    margin-left: 5px;
+.btn-primary:hover {
+    background-color: #7744cc;
+}
+
+.btn-danger {
+    background-color: #000;
+    border: none;
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background-color: #dd4400;
 }
 
 .delete-list-btn {
     margin-top: 10px;
     width: 100%;
+    background-color: #000;
+    border: none;
+    color: #fff;
+}
+
+.delete-list-btn:hover {
+    background-color: #dd4400;
 }
         
     </style>
