@@ -62,7 +62,7 @@ function renderList() {
 </li>
                 `).join('')}
             </ul>
-            <button class="btn btn-danger w-100 mt-2" onclick="deleteList(${selectedListIndex})">Delete List</button>
+            <button class="btn btn-danger w-100 mt-2" onclick="deleteList(${selectedListIndex})">Delete</button>
         `;
         listContainer.insertAdjacentHTML('beforeend', listHtml);
         // Add event listener for enter key press
