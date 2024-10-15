@@ -131,6 +131,11 @@ function addItem(listIndex) {
         localStorage.setItem('lists', JSON.stringify(lists));
         newItemInput.value = '';
         renderList();
+        // Focus on the input element after renderList() has completed
+        setTimeout(() => {
+            const newInputBox = document.getElementById('new-item-input');
+            newInputBox.focus();
+        }, 50); // adjust the delay as needed
     }
 }
 
