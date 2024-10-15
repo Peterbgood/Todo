@@ -42,6 +42,7 @@ function renderListSelector() {
 
 
 
+
 // Function to render list
 function renderList() {
     const selectedListIndex = listSelector.value;
@@ -72,6 +73,10 @@ function renderList() {
                 addItem(selectedListIndex);
                 setTimeout(() => {
                     newItemInput.focus(); // Focus on the input field
+                    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                        // For mobile devices, manually open the keyboard
+                        newItemInput.click();
+                    }
                 }, 50); // Adjust the delay as needed
             }
         });
