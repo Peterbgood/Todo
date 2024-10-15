@@ -190,6 +190,12 @@ function addItem(listIndex) {
         setTimeout(() => {
             const newInputBox = document.getElementById('new-item-input');
             newInputBox.focus();
+            newInputBox.setSelectionRange(0, 0); // Set cursor position
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                // For mobile devices, manually open the keyboard
+                newInputBox.click();
+                newInputBox.setSelectionRange(0, 0); // Set cursor position
+            }
         }, 50); // adjust the delay as needed
     }
 }
