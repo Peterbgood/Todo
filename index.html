@@ -55,11 +55,12 @@
   margin: 0 auto; /* Add this */
 }
 
-/* Optional: Target iOS devices specifically */
-@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) {
+@media only screen and (max-width: 768px) {
   #list-selector {
-    text-align: center;
-    width: 100%;
+    text-align: center !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    display: block !important;
   }
 }
 
