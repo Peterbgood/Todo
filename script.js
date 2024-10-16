@@ -43,7 +43,9 @@ function renderListSelector() {
 
 
 
-// Function to render list
+/**
+ * Render list.
+ */
 function renderList() {
     const selectedListIndex = listSelector.value;
     if (selectedListIndex !== '' && selectedListIndex !== 'new') {
@@ -55,8 +57,8 @@ function renderList() {
         newItemInput.type = 'text';
         newItemInput.id = 'new-item-input';
         newItemInput.className = 'form-control';
-        newItemInput.maxLength = 30;
         newItemInput.placeholder = 'Enter new item';
+        
 
         // Create add button element separately
         const addButton = document.createElement('button');
@@ -76,9 +78,15 @@ function renderList() {
         listElement.className = 'list-group mt-2';
         list.items.forEach((item, itemIndex) => {
             const listItem = document.createElement('li');
-            listItem.className = 'list-group-item d-flex align-items-center';
+            listItem.className = 'list-group-item  align-items-center text-wrap';
             listItem.dataset.index = itemIndex;
             listItem.textContent = item;
+
+            listItem.style.whiteSpace = 'normal';
+            listItem.style.wordWrap = 'break-word';
+            listItem.style.width = '100%';
+            listItem.style.flexWrap = 'wrap'; // Add this
+
             listElement.appendChild(listItem);
         });
 
@@ -171,7 +179,6 @@ function renderList() {
         listContainer.innerHTML = '';
     }
 }
-
 
 // Function to save new list
 function saveList() {
