@@ -106,14 +106,7 @@ function renderList() {
             if (e.key === 'Enter') {
                 e.preventDefault(); 
                 addItem(selectedListIndex);
-                setTimeout(() => {
-                    newItemInput.focus(); 
-                    newItemInput.setSelectionRange(0, 0); 
-                    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-                        newItemInput.click();
-                        newItemInput.setSelectionRange(0, 0); 
-                    }
-                }, 50); 
+                newItemInput.focus(); 
             }
         });
 
@@ -168,9 +161,7 @@ function renderList() {
             if (e.key === 'Enter') {
                 e.preventDefault(); 
                 saveList();
-                setTimeout(() => {
-                    newListInput.focus(); 
-                }, 50); 
+                newListInput.focus(); 
             }
         });
     } 
