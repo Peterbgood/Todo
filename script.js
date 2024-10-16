@@ -46,9 +46,6 @@ function renderListSelector() {
 /**
  * Render list.
  */
-/**
- * Render list.
- */
 function renderList() {
     const selectedListIndex = listSelector.value;
     if (selectedListIndex !== '' && selectedListIndex !== 'new') {
@@ -123,26 +120,22 @@ function renderList() {
         // Add event listeners for list items
         const listItems = listElement.children;
         Array.from(listItems).forEach((item) => {
-            // Double-click to delete
+            // Double-click to move up
             let lastClick = 0;
-            let timer;
             item.addEventListener('click', (e) => {
                 const currentTime = new Date().getTime();
                 if (currentTime - lastClick < 500) {
-                    // Double tap
-                    deleteItem(selectedListIndex, parseInt(item.dataset.index));
-                } else {
-                    // Single tap
                     moveUp(selectedListIndex, parseInt(item.dataset.index));
                 }
                 lastClick = currentTime;
             });
 
             // Press-and-hold (long press) to delete on mobile
+            let timer;
             item.addEventListener('touchstart', () => {
                 timer = setTimeout(() => {
                     deleteItem(selectedListIndex, parseInt(item.dataset.index));
-                }, 500); // 500ms delay
+                }, 500); 
             });
             item.addEventListener('touchend', () => {
                 clearTimeout(timer);
