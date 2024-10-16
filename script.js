@@ -111,8 +111,18 @@ function renderList() {
                 e.preventDefault();
                 addItem(selectedListIndex);
                 newItemInput.value = '';
-                newItemInput.focus();
+                setTimeout(() => {
+                    newItemInput.focus();
+                }, 0);
             }
+        });
+
+        // Prevent blur
+        newItemInput.addEventListener('blur', (e) => {
+            e.preventDefault();
+            setTimeout(() => {
+                newItemInput.focus();
+            }, 0);
         });
 
         // Add event listeners for list items
@@ -166,19 +176,34 @@ function renderList() {
 
         // Add event listener for Enter key press
         const newListInput = document.getElementById('new-list-input');
-newListInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        e.preventDefault();
-        saveList();
-        newListInput.value = '';
-        newListInput.focus();
-    }
-});
+        newListInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                saveList();
+                newListInput.value = '';
+                setTimeout(() => {
+                    newListInput.focus();
+                }, 0);
+            }
+        });
+
+                      // Prevent blur
+        newListInput.addEventListener('blur', (e) => {
+            e.preventDefault();
+            setTimeout(() => {
+                newListInput.focus();
+            }, 0);
+        });
     } else {
         // Hide all buttons and inputs when no list is selected
         listContainer.innerHTML = '';
     }
 }
+
+
+
+
+
 
 // Function to save new list
 function saveList() {
