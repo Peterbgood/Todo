@@ -1,0 +1,188 @@
+
+.body {
+  background-color: #f7f7f7;
+  font-family: Arial, sans-serif;
+  transition: background-color 0.3s ease;
+}
+
+
+/* Button Styles */
+
+#add-list-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 24px;
+  line-height: 30px;
+  text-align: center;
+  background-color: tan;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  animation: pulse 2s infinite;
+}
+
+#add-list-btn:hover {
+  background-color: #00781a;
+}
+
+
+/* List Styles */
+
+#list-selector {
+  background-color: #fff;
+  border: none;
+  padding: 10px;
+  z-index: 1;
+  font-weight: 500 !important;
+  font-size: 1.2rem;
+  max-width: 100%; /* Add this */
+  margin: 0 auto; /* Add this */
+}
+
+@media only screen and (max-width: 768px) {
+  .col-12 {
+    display: flex;
+    justify-content: center;
+  }
+  #list-selector {
+    width: 100%;
+ text-align: center !important;
+  }
+}
+
+
+#list-selector option {
+  font-size: 0.9rem; /* Adjust font size as needed */
+}
+
+.text-wrap {
+  white-space: normal;
+  word-wrap: break-word;
+  width: 100%;
+}
+
+
+/* Container Styles */
+
+.container {
+  max-width: 600px;
+  margin: 0px auto;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #fff;
+  
+}
+
+
+/* List Group Item Styles */
+
+.list-group-item {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border: 2px solid #ccc !important;
+  margin-bottom: 5px;
+  border-radius: 5px !important;
+  background-color: #f9f9f9;
+  flex-wrap: wrap;
+}
+
+.list-group-item:hover {
+  background-color: #f0f0f0;
+  border-color: #aaa;
+}
+
+
+/* List Container Styles */
+
+#list-container > .list-group-item:first-child {
+  border-top-left-radius: 10px !important;
+  border-top-right-radius: 10px !important;
+  border-top-width: 2px !important;
+}
+
+#list-container {
+  border-top: 2px !important;
+}
+
+
+/* Modal Styles */
+
+.modal-content {
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+  background-color: tan;
+  color: #fff;
+  padding: 10px;
+  border-radius: 10px 10px 0 0;
+}
+
+.modal-footer {
+  background-color: #f7f7f7;
+  padding: 10px;
+  border-radius: 0 0 10px 10px;
+}
+
+
+/* Input and Button Styles */
+
+#new-item-input {
+  border-radius: 5px 0 0 5px;
+}
+
+#new-item-input:focus {
+  border-color: tan;
+}
+
+.btn-sm {
+  border-radius: 0 5px 5px 0;
+}
+
+.btn-sm:focus {
+  border-color: tan;
+}
+
+.btn-primary {
+  background-color: tan;
+  border: none;
+  color: #000;
+}
+
+.btn-primary:hover {
+  background-color: #000;
+}
+
+.btn-danger {
+  background-color: tan;
+  border: none;
+  color: #000;
+}
+
+.btn-danger:hover {
+  background-color: #000;
+}
+
+.delete-list-btn {
+  margin-top: 10px;
+  width: 100%;
+  background-color: #dc3545;
+  border: none;
+  color: #fff;
+}
+
+
+/* Additional Styles */
+
+.list-group-item, .list-group-item * {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+}
