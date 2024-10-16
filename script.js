@@ -58,12 +58,10 @@ function renderList() {
         newItemInput.id = 'new-item-input';
         newItemInput.className = 'form-control';
         newItemInput.placeholder = 'Enter new item';
-        
 
         // Create add button element separately
         const addButton = document.createElement('button');
         addButton.className = 'btn btn-primary btn-sm';
-        addButton.onclick = () => addItem(selectedListIndex);
         addButton.textContent = 'Add';
 
         // Create input group container
@@ -78,14 +76,14 @@ function renderList() {
         listElement.className = 'list-group mt-2';
         list.items.forEach((item, itemIndex) => {
             const listItem = document.createElement('li');
-            listItem.className = 'list-group-item  align-items-center text-wrap';
+            listItem.className = 'list-group-item align-items-center text-wrap';
             listItem.dataset.index = itemIndex;
             listItem.textContent = item;
 
             listItem.style.whiteSpace = 'normal';
             listItem.style.wordWrap = 'break-word';
             listItem.style.width = '100%';
-            listItem.style.flexWrap = 'wrap'; // Add this
+            listItem.style.flexWrap = 'wrap';
 
             listElement.appendChild(listItem);
         });
@@ -93,7 +91,6 @@ function renderList() {
         // Create delete list button
         const deleteButton = document.createElement('button');
         deleteButton.className = 'btn btn-danger w-100 mt-2';
-        deleteButton.onclick = () => deleteList(selectedListIndex);
         deleteButton.textContent = 'Delete';
 
         // Append elements to listContainer
@@ -101,12 +98,20 @@ function renderList() {
         listContainer.appendChild(listElement);
         listContainer.appendChild(deleteButton);
 
+        // Add event listener for add button
+        addButton.addEventListener('click', () => {
+            addItem(selectedListIndex);
+            newItemInput.value = '';
+            newItemInput.focus();
+        });
+
         // Add event listener for enter key press
         newItemInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
-                e.preventDefault(); 
+                e.preventDefault();
                 addItem(selectedListIndex);
-                newItemInput.focus(); 
+                newItemInput.value = '';
+                newItemInput.focus();
             }
         });
 
@@ -128,7 +133,7 @@ function renderList() {
             item.addEventListener('touchstart', () => {
                 timer = setTimeout(() => {
                     deleteItem(selectedListIndex, parseInt(item.dataset.index));
-                }, 500); 
+                }, 500);
             });
             item.addEventListener('touchend', () => {
                 clearTimeout(timer);
@@ -140,32 +145,36 @@ function renderList() {
                 deleteItem(selectedListIndex, parseInt(item.dataset.index));
             });
         });
-    } 
-    else if (selectedListIndex === 'new') {
+
+        // Delete list button event listener
+        deleteButton.addEventListener('click', () => {
+            deleteList(selectedListIndex);
+        });
+    } else if (selectedListIndex === 'new') {
         const newListHtml = `
-            <div class="mt-1  input-group">
-                <input type="text" id="new-list-input" class="form-control"  placeholder="Enter new list title">
+            <div class="mt-1 input-group">
+                <input type="text" id="new-list-input" class="form-control" placeholder="Enter new list title">
                 <button class="btn btn-primary btn-sm" id="save-new-list-btn">Save</button>
             </div>
         `;
         listContainer.innerHTML = '';
         listContainer.insertAdjacentHTML('beforeend', newListHtml);
-        
+
         // Add event listener for save button
         const saveNewListBtn = document.getElementById('save-new-list-btn');
         saveNewListBtn.addEventListener('click', saveList);
 
         // Add event listener for Enter key press
         const newListInput = document.getElementById('new-list-input');
-        newListInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault(); 
-                saveList();
-                newListInput.focus(); 
-            }
-        });
-    } 
-    else {
+newListInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        saveList();
+        newListInput.value = '';
+        newListInput.focus();
+    }
+});
+    } else {
         // Hide all buttons and inputs when no list is selected
         listContainer.innerHTML = '';
     }
