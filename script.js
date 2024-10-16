@@ -151,7 +151,7 @@ function renderList() {
     else if (selectedListIndex === 'new') {
         const newListHtml = `
             <div class="mt-1  input-group">
-                <input type="text" id="new-list-input" class="form-control"  placeholder="Enter new list title" autofocus>
+                <input type="text" id="new-list-input" class="form-control"  placeholder="Enter new list title">
                 <button class="btn btn-primary btn-sm" id="save-new-list-btn">Save</button>
             </div>
         `;
