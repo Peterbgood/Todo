@@ -186,3 +186,16 @@
   -ms-user-select: none;
   -moz-user-select: none;
 }
+
+#list-selector {
+  text-align: center;
+  text-align-last: center; /* Add this */
+}
+
+@media only screen and (max-width: 768px) {
+  #list-selector {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
